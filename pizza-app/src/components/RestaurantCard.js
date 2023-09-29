@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function RestaurantCard({ restaurant, handleUpdateRestaurant, handleDeletePlant}){
+function RestaurantCard({ restaurant, handleUpdateRestaurant, handleDeleteRestaurant}){
     const {id, name, address, pizzas} = restaurant;
     const [updatedAddress, setUpdatedAddress] = useState(address)
     const [updatedPizzas, setUpdatedPizzas] = useState(pizzas)
@@ -18,17 +18,24 @@ function RestaurantCard({ restaurant, handleUpdateRestaurant, handleDeletePlant}
             handleUpdateRestaurant(updatedRestaurant)
         }
     }
-    const handleUpdate = async (updatedRestaurant) => {
-        const response = await fetch(`/restaurants/${id}`, {
+    const handleUpdate = async () => {
+        if(!updatedAddress.trim()) {
+            alert("Address cannot be empty.")
+            return;
+        }
+        const response = await fetch(`/restaurants/${restaurant.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedRestaurant),
+            body: JSON.stringify({ address: updatedAddress, pizzas: updatedPizzas}),
         });
         
         if (response.ok){
+            const updatedRestaurant = {...restaurant, address: updatedAddress}
             handleUpdateRestaurant(updatedRestaurant);
+        }else{
+            console.error("Failed to update restaurant.")
         }
     };
 
@@ -51,7 +58,17 @@ function RestaurantCard({ restaurant, handleUpdateRestaurant, handleDeletePlant}
         setUpdatedAddress(e.target.value);
     };
 
-    const handlePizzaChange = (e) => {}
+    const handlePizzaNameChange = (e) => {
+        const newPizzas = [...updatedPizzas];
+        newPizzas[index].name = e.target.value;
+        setUpdatedPizzas(newPizzas);
+    }
+
+    const handlePizzaIngredientsChange = (e) => {
+        const newPizzas = [...updatedPizzas];
+        newPizzas[index].ingredients = e.target.value;
+        setUpdatedPizzas(newPizzas)
+    }
 
     const handleDeleteClick = async () => {
         const response = await fetch(`/restaurants/${id}`, {
@@ -70,18 +87,20 @@ function RestaurantCard({ restaurant, handleUpdateRestaurant, handleDeletePlant}
             <p>Address: {address}</p>
             <form onSubmit={(e) => e.preventDefault()}>
                 <input type="text" placeholder="New Address..." value={updatedAddress} onChange={handleAddressChange}/>
-                <button onClick={() => handleUpdate({...restaurant, address: updatedAddress, pizzas:updatedPizzas})}>
+                <button onClick={() => handleUpdate(updatedAddress)}>
                     Update Address
                 </button>
                 <ul>
                    {updatedPizzas.map((pizza, index) => (
                     <li key={index}>
-                        <input type="text" value={pizza.name} onChange={(e) => handlePizzaChange(e, index)} />
-                        <input type="text" value={pizza.ingredients} onChange={(e) => handlePizzaChange(e, index)} />
+                        <input type="text" value={pizza.name} onChange={(e) => handlePizzaNameChange(e, index)} />
+                        <input type="text" value={pizza.ingredients} onChange={(e) => handlePizzaIngredientsChange(e, index)} />
                     </li>
                    ))} 
                 </ul>
-                <button onClick={() => handlePizzaUpdate(updatedPizzas)}>Update Pizzas </button>
+                <button onClick={() => handlePizzaUpdate(updatedPizzas)}> 
+                Update Pizza 
+                </button>
             </form>
             <div className="btn-group">
                 {restaurant.is_open ? (
