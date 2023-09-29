@@ -1,12 +1,20 @@
 import { useState } from "react";
 
-function NewRestaurant({ onAddRestaurant}){
+function NewRestaurantForm({ onAddRestaurant}){
     const [name, setName] = useState("")
     const [address, setAddress] = useState("")
+    const [isLoading, setIsLoading] = useState("")
 
 
     function handleSubmit(e){
         e.preventDefault();
+        setIsLoading(true);
+
+        if (!name || !address) {
+            alert("Please fill out all fields.")
+            setIsLoading(false);
+        }
+
         fetch("/restaurants", {
             method: "POST",
             headers: {
@@ -17,8 +25,20 @@ function NewRestaurant({ onAddRestaurant}){
                 address: address,
             }),
         })
-        .then((r) => r.json())
-        .then((newRestaurant) => onAddRestaurant(newRestaurant));
+        .then((r) => {
+            if (!r.ok) {
+                throw new Error("Network response was not ok.")
+            }
+            return r.json();
+        })
+        .then((newRestaurant) => {
+            setIsLoading(false);
+            onAddRestaurant(newRestaurant);
+         })
+        .catch((error) => {
+            console.error("Error:", error)
+            setIsLoading(false)
+        });
     }
 
     return (
@@ -39,10 +59,12 @@ function NewRestaurant({ onAddRestaurant}){
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 />
-                <button type="submit">Add Restaurant</button>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Adding Restaurant..." : "Add Restaurant"}
+                    </button>
             </form>
         </div>
     );
 }
 
-export default NewRestaurant
+export default NewRestaurantForm
