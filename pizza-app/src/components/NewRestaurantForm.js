@@ -23,7 +23,7 @@ function NewRestaurant({ onAddRestaurant}){
 
     return (
         <div className="new-restaurant-form">
-            <h2> New Restaurant</h2>
+            <h2> New Restaurant (~ _ ~)</h2>
             <form onSubmit={handleSubmit}>
                 <input
                 type="text"
@@ -39,6 +39,7 @@ function NewRestaurant({ onAddRestaurant}){
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 />
+                <button type="submit">Add Restaurant</button>
             </form>
         </div>
     );
