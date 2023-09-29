@@ -13,6 +13,7 @@ function NewRestaurantForm({ onAddRestaurant}){
         if (!name || !address) {
             alert("Please fill out all fields.")
             setIsLoading(false);
+            return;
         }
 
         fetch("/restaurants", {

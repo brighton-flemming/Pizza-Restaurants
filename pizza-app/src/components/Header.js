@@ -1,7 +1,8 @@
 function Header(){
     return(
         <header>
-            <h1>Funky Anchovy
+            <h1>
+                Funky Anchovy
                 <span className="logo" role="img">
                 🍕🎨🔥🚴‍♂️🍕
                 </span>

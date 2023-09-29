@@ -3,10 +3,19 @@ import { useState } from "react";
 function NewPizzaForm({ onAddPizza }) {
     const [name, setName] = useState("")
     const [ingredients, setIngredients] = useState("")
+    const [isLoading, setIsLoading] = useState("")
 
     function handleSubmit(e) {
         e.preventDefault();
-        fetch("/pizza", {
+        setIsLoading(true);
+
+        if (!name || !ingredients) {
+            alert("Please fill out all fields");
+            setIsLoading(false);
+            return;
+        }
+
+        fetch("/pizzas", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -16,8 +25,20 @@ function NewPizzaForm({ onAddPizza }) {
                 ingredients: ingredients,
             }),
         })
-        .then((r) => r.json())
-        .then((newPizza) => onAddPizza(newPizza));
+        .then((r) => {
+            if(!r.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return r.json()
+        })
+        .then((newPizza) => {
+            setIsLoading(false);
+            onAddPizza(newPizza);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            setIsLoading(false);
+        });
     }
 
     return (
@@ -38,7 +59,9 @@ function NewPizzaForm({ onAddPizza }) {
                 value={ingredients}
                 onChange={(e) => setIngredients(e.target.value)}
                 />
-                <button type="submit">Add Pizza</button>
+                <button type="submit" disabled={isLoading}>
+                {isLoading ? "Adding Pizza..." : "Add Pizza"}
+                    </button>
             </form>
         </div>
     )
