@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 
 function NewRestaurantForm({ onAddRestaurant }) {
   const [name, setName] = useState("");

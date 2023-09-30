@@ -1,3 +1,5 @@
+import React from "react";
+
 function Search({ searchTerm, onRestaurantSearchChange, onPizzaSearchChange }) {
   return (
     <div className="searchbar">

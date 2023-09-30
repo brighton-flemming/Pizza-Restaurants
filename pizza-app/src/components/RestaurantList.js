@@ -1,4 +1,5 @@
 import RestaurantCard from "./RestaurantCard";
+import React from "react";
 
 function RestaurantList({
   restaurants,
