@@ -10,6 +10,8 @@ function RestaurantCard({
   const [updatedAddress, setUpdatedAddress] = useState(address);
   const [updatedPizzas, setUpdatedPizzas] = useState(pizzas);
 
+  for (let index = 0; index < restaurant.length; index++) {
+
   const handleClick = async () => {
     const response = await fetch(`restaurants/${id}/toggleStatus`, {
       method: "PATCH",
@@ -104,12 +106,12 @@ function RestaurantCard({
               <input
                 type="text"
                 value={pizza.name}
-                onChange={(e) => handlePizzaNameChange(e, index)}
+                onChange={(e) => handlePizzaNameChange(e)}
               />
               <input
                 type="text"
                 value={pizza.ingredients}
-                onChange={(e) => handlePizzaIngredientsChange(e, index)}
+                onChange={(e) => handlePizzaIngredientsChange(e)}
               />
             </li>
           ))}
@@ -130,6 +132,7 @@ function RestaurantCard({
       </div>
     </div>
   );
+}
 }
 
 export default RestaurantCard;

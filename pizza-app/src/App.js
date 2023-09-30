@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
 import Header from './components/Header';
+import React from 'react';
 import RestaurantPage from './components/RestaurantPage';
 import './App.css';
 
 
-class App extends Component {
-  render() {
+function App() {
     return (
       <div className="App">
         <Header />
@@ -14,6 +13,6 @@ class App extends Component {
       </div>
     );
   }
-}
+
 
 export default App;

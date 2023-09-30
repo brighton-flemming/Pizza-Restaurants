@@ -16,7 +16,7 @@ function NewPizzaForm({ onAddPizza }) {
       return;
     }
 
-    fetch("/pizzas", {
+    fetch(`/pizzas`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

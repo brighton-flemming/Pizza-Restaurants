@@ -34,7 +34,7 @@ function RestaurantPage() {
   ]);
 
   useEffect(() => {
-    fetch("/restaurants/${id}/pizzas")
+    fetch(`/restaurants/${restaurants.id}/pizzas`)
       .then((r) => r.json())
       .then((pizzasArray) => {
         setPizzas(pizzasArray);
@@ -66,13 +66,13 @@ function RestaurantPage() {
 
     const updatedRestaurantsArray = restaurants.map((restaurant) => {
       const updatedRestaurant = {
-        id: restaurants.id,
-        name: updatedRestaurant.name,
-        address: updatedRestaurant.address,
-        pizzas: updatedRestaurant.pizzas,
-        is_open: updatedRestaurant.is_open,
+        id: restaurant.id,
+        name: restaurant.name,
+        address: restaurant.address,
+        pizzas: restaurant.pizzas,
+        is_open: restaurant.is_open,
       };
-      if (restaurant.id == updatedRestaurant.id) {
+      if (restaurant.id === updatedRestaurant.id) {
         return { ...restaurants, ...updatedRestaurant };
       } else {
         return restaurant;
@@ -83,11 +83,11 @@ function RestaurantPage() {
 
    const updatedPizzasArray = pizzas.map((pizza) => {
     const updatedPizza = {
-      id: pizzas.id,
-      name: updatedPizza.name,
-      ingredients: updatedPizza.ingredients,
+      id: pizza.id,
+      name: pizza.name,
+      ingredients: pizza.ingredients,
     };
-    if (pizza.id == updatedPizza.id) {
+    if (pizza.id === updatedPizza.id) {
       return { ...pizzas, ...updatedPizza };
     } else {
       return pizza;
