@@ -1,16 +1,17 @@
 import RestaurantCard from "./RestaurantCard";
 
 function RestaurantList({
-  resataurants,
+  restaurants,
   handleUpdateRestaurant,
   handleDeleteRestaurant,
 }) {
   return (
     <ul className="cards">
-      {resataurants.map((resataurant) => {
+      {restaurants.map((restaurant) => {
         return (
           <RestaurantCard
-            key={resataurant.id}
+            key={restaurant.id}
+            restaurant={restaurant}
             handleUpdateRestaurant={handleUpdateRestaurant}
             handleDeleteRestaurant={handleDeleteRestaurant}
           />
