@@ -24,17 +24,21 @@ function RestaurantPage() {
       });
   }, []);
 
-  const [pizzas, setPizzas] = useState([]);
+  const [pizzas, setPizzas] = useState([
+    {
+        id: null,
+        name:"",
+        ingredients:"",
+    },
+  ]);
 
   useEffect(() => {
-    if (restaurantId) {
     fetch("/restaurants/${id}/pizzas")
       .then((r) => r.json())
       .then((pizzasArray) => {
         setPizzas(pizzasArray);
       });
-    }
-  }, [restaurantId]);
+  }, []);
 
   const handleAddRestaurant = (newRestaurant) => {
     const updatedRestaurantsArray = [...restaurants, newRestaurant];
@@ -53,7 +57,7 @@ function RestaurantPage() {
     setRestaurants(updatedRestaurantsArray);
   };
 
- const handleUpdateRestaurant = (updatedRestaurant) => {
+  const handleUpdateRestaurant = (updatedRestaurant) => {
     if (!updatedRestaurant || !updatedRestaurant.id) {
       console.error("Invalid updated restaurant or missing id");
       return;
@@ -74,9 +78,9 @@ function RestaurantPage() {
       }
     });
     setRestaurants(updatedRestaurantsArray);
-  };
+   };
 
-  const updatedPizzasArray = pizzas.map((pizza) => {
+   const updatedPizzasArray = pizzas.map((pizza) => {
     const updatedPizza = {
       id: pizzas.id,
       name: updatedPizza.name,
@@ -89,13 +93,13 @@ function RestaurantPage() {
     }
   });
   setPizzas(updatedPizzasArray);
-}
+ 
 
-const displayedRestauarnts = restaurants.filter((restaurant) => {
+const displayedRestaurants = restaurants.filter((restaurant) => {
   return restaurant.name.toLowerCase().includes(searchTerm.toLowerCase());
-});
+  });
 
-return (
+  return (
   <main>
     <NewPizzaForm onAddPizza={handleAddPizza} />
     <NewRestaurantForm onAddRestaurant={handleAddRestaurant} />
@@ -110,4 +114,7 @@ return (
       handleDeleteRestaurant={handleDeleteRestaurant}
     />
   </main>
-);
+ );
+  }
+
+export default RestaurantPage;
