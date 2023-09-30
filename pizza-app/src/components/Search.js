@@ -1,22 +1,22 @@
-function Search({ searchTerm, onSearchChange }) {
+function Search({ searchTerm, onRestaurantSearchChange, onPizzaSearchChange }) {
   return (
     <div className="searchbar">
-      <label htmlFor="search"> Search Restaurant:</label>
+      <label htmlFor="restaurantSearch"> Search Restaurant:</label>
       <input
         type="text"
-        id="search"
-        placeholder="Type a name to search..."
+        id="restaurantSearch"
+        placeholder="Type a restaurant name to search..."
         value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
+        onChange={(e) => onRestaurantSearchChange(e.target.value)}
       />
 
-      <label htmlFor="search"> Search Pizza:</label>
+      <label htmlFor="pizzaSearch"> Search Pizza:</label>
       <input
         type="text"
-        id="search"
-        placeholder="Type a name to search..."
+        id="pizzaSearch"
+        placeholder="Type a pizza name to search..."
         value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
+        onChange={(e) => onPizzaSearchChange(e.target.value)}
       />
     </div>
   );
