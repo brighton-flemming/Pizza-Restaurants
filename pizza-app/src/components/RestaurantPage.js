@@ -34,12 +34,15 @@ function RestaurantPage() {
   ]);
 
   useEffect(() => {
-    fetch(`/restaurants/${restaurants.id}/pizzas`)
+    if (restaurants.length > 0) {
+        const restaurantId = restaurants[0].id;
+    fetch(`/restaurants/${restaurantId}/pizzas`)
       .then((r) => r.json())
       .then((pizzasArray) => {
         setPizzas(pizzasArray);
       });
-  }, []);
+    }
+  }, [restaurants]);
 
   const handleAddRestaurant = (newRestaurant) => {
     const updatedRestaurantsArray = [...restaurants, newRestaurant];
@@ -81,6 +84,7 @@ function RestaurantPage() {
     setRestaurants(updatedRestaurantsArray);
    };
 
+   useEffect(() => {
    const updatedPizzasArray = pizzas.map((pizza) => {
     const updatedPizza = {
       id: pizza.id,
@@ -94,6 +98,7 @@ function RestaurantPage() {
     }
   });
   setPizzas(updatedPizzasArray);
+}, [pizzas])
  
 
 const displayedRestaurants = restaurants.filter((restaurant) => {
