@@ -16,7 +16,7 @@ function NewRestaurantForm({ onAddRestaurant }) {
       return;
     }
 
-    fetch("/restaurants", {
+    fetch(`/restaurants`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ function NewRestaurantForm({ onAddRestaurant }) {
 
   return (
     <div className="new-restaurant-form">
-      <h2> New Restaurant (~ _ ~)</h2>
+      <h2> New Restaurant </h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

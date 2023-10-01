@@ -3,7 +3,8 @@ import React from "react";
 import NewRestaurantForm from "./NewRestaurantForm";
 import NewPizzaForm from "./NewPizzaForm";
 import RestaurantList from "./RestaurantList";
-import Search from "./Search";
+import SearchPizza from "./SearchPizza";
+import SearchRestaurant from "./SearchRestaurant";
 
 function RestaurantPage() {
   const [restaurants, setRestaurants] = useState([
@@ -15,7 +16,9 @@ function RestaurantPage() {
       is_open: true,
     },
   ]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [pizzaSearchTerm, setPizzaSearchTerm] = useState("");
+  const [restaurantSearchTerm, setRestaurantSearchTerm] = useState("")
+  
 
   useEffect(() => {
     fetch("/restaurants")
@@ -106,7 +109,7 @@ function RestaurantPage() {
  
 
 const displayedRestaurants = restaurants.filter((restaurant) => {
-  return restaurant.name.toLowerCase().includes(searchTerm.toLowerCase());
+  return restaurant.name.toLowerCase().includes(restaurantSearchTerm.toLowerCase());
   });
 
   return (
@@ -118,11 +121,16 @@ const displayedRestaurants = restaurants.filter((restaurant) => {
       <NewRestaurantForm onAddRestaurant={handleAddRestaurant} />
       </div>
     <div className="search-container">
-    <Search
-      searchTerm={searchTerm}
-      onPizzaSearchChange={setSearchTerm}
-      onRestaurantSearchChange={setSearchTerm}
+    <SearchRestaurant
+      searchTerm={restaurantSearchTerm}
+      onRestaurantSearchChange={setRestaurantSearchTerm}
     />
+    </div>
+    <div className="search-container">
+      <SearchPizza
+      searchTerm={pizzaSearchTerm}
+      onPizzaSearchChange={setPizzaSearchTerm}
+       />
     </div>
     <RestaurantList
       restaurants={displayedRestaurants}

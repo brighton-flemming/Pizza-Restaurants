@@ -44,7 +44,7 @@ function NewPizzaForm({ onAddPizza }) {
 
   return (
     <div className="new-pizza-form">
-      <h2>New Pizza (* _ *)</h2>
+      <h2>New Pizza</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
