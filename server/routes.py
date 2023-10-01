@@ -31,8 +31,8 @@ def create_app():
         restaurants =  Restaurant.query.all()
         restaurants_data = [{'id': restaurant.id, 'name': restaurant.name, "address": restaurant.address, "is_open": restaurant.is_open} for restaurant in restaurants]
         return jsonify(restaurants_data)
-    
-    @app.route('restaurants', methods=['POST'])
+        
+    @app.route('/restaurants', methods=['POST'])
     def add_restaurant():
         data = request.get_json()
         name = data.get('name')
@@ -40,7 +40,7 @@ def create_app():
         is_open = data.get('is_open')
         new_restaurant = Restaurant(name=name, address=address, is_open=is_open)
         db.session.add(new_restaurant)
-        db.sesion.commit()
+        db.session.commit()
         return jsonify({'message': 'Restaurant added successfully.'})
     
     @app.route('/restaurants/<int:restaurant_id>', methods=['PUT'])
@@ -61,7 +61,7 @@ def create_app():
             return jsonify({'message': ' Restaurant not found.'})
     
     @app.route('/restaurants/<int:restaurant_id>', methods=['DELETE'])
-    def delele_restaurant(restaurant_id):
+    def delete_restaurant(restaurant_id):
         restaurant = Restaurant.query.get(restaurant_id)
         if restaurant:
             db.session.delete(restaurant)
@@ -76,17 +76,17 @@ def create_app():
         pizzas_data = [{'id': pizza.id, 'name': pizza.name, 'ingredients': pizza.ingredients} for pizza in pizzas]
         return jsonify(pizzas_data)
     
-    @app.route('/restaurants/<int:restaurant_id/pizzas>', methods=['POST'])
-    def add_pizza(restaurant_id):
+    @app.route('/pizzas>', methods=['POST'])
+    def add_pizza():
         data = request.get_json()
         name = data.get('name')
         ingredients = data.get('ingredients')
-        new_pizza = Restaurant(name=name, ingredients=ingredients)
+        new_pizza = Pizza(name=name, ingredients=ingredients)
         db.session.add(new_pizza)
         db.session.commit()
         return jsonify({'message': 'Pizza added successfully.'})
     
-    @app.route('/restaurants/<int:pizza_id>', methods=['PUT'])
+    @app.route('/pizzas/<int:pizza_id>', methods=['PUT'])
     def update_pizza(pizza_id):
         data = request.get_json()
         new_name = data.get('name')
@@ -110,6 +110,20 @@ def create_app():
             return jsonify({'message': 'Pizza deleted successfully.'})
         else:
             return jsonify({'message': 'Pizza not found.'})
+    
+    @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['GET'])
+    def get_restaurant_pizzas():
+        pass
+
+    @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['POST'])
+    def add_restaurant_pizzas():
+        pass
+
+    @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['DELETE'])
+    def delete_restaurant_pizzas():
+        pass
+
+
         
     
     return app
