@@ -70,7 +70,7 @@ def create_app():
         else:
             return jsonify({'message': 'Restaurant not found.'})
     
-    @app.route('/restaurants/<int:restaurant_id>/pizzas', methods=['GET'])
+    @app.route('/pizzas', methods=['GET'])
     def get_restaurant_pizzas(restaurant_id):
         pizzas = Pizza.query.filter_by(restaurant_id=restaurant_id).all()
         pizzas_data = [{'id': pizza.id, 'name': pizza.name, 'ingredients': pizza.ingredients} for pizza in pizzas]
@@ -112,18 +112,29 @@ def create_app():
             return jsonify({'message': 'Pizza not found.'})
     
     @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['GET'])
-    def get_restaurant_pizzas():
-        pass
+    def get_restaurant_pizza(restaurant_id, pizza_id):
+        restaurant_pizza = RestaurantPizza.query.filter_by(restaurant_id=restaurant_id, pizza_id=pizza_id).first()
+        if restaurant_pizza:
+            return jsonify({'id': restaurant_pizza.id, 'restaurant_id': restaurant_pizza.restaurant_id, 'resturant_name': restaurant_pizza.restaurant_name,'pizza_id': restaurant_pizza.pizza_id, 'pizza_name': restaurant_pizza.pizza_name})
+        else:
+            return jsonify({'message': 'The Pizza you seek in the stated Restaurant is not found.'}), 404
 
     @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['POST'])
-    def add_restaurant_pizzas():
-        pass
-
+    def add_restaurant_pizza(restaurant_id, restaurant_name, pizza_id, pizza_name, price):
+        new_restaurant_pizza = RestaurantPizza(restaurant_id=restaurant_id, restaurant_name=restaurant_name, pizza_id=pizza_id, pizza_name=pizza_name, price=price)
+        db.session.add(new_restaurant_pizza)
+        db.session.commit()
+        return jsonify({'message': 'The Pizza has been added successfully to the stated Restaurant'})
+   
     @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['DELETE'])
-    def delete_restaurant_pizzas():
-        pass
-
-
+    def delete_restaurant_pizza(restaurant_id, pizza_id):
+        restaurant_pizza = RestaurantPizza.query.filter_by(restaurant_id=restaurant_id, pizza_id=pizza_id)
+        if restaurant_pizza:
+            db.session.delete(restaurant_pizza)
+            db.session.commit()
+            return jsonify ({'message': 'The Pizza from the stated Restaurant has been deleted.'})
+        else:
+            return jsonify({'message': ' The Pizza you seek in the stated Restaurant is not found.'})
         
     
     return app
