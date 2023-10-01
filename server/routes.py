@@ -75,5 +75,43 @@ def create_app():
         pizzas = Pizza.query.filter_by(restaurant_id=restaurant_id).all()
         pizzas_data = [{'id': pizza.id, 'name': pizza.name, 'ingredients': pizza.ingredients} for pizza in pizzas]
         return jsonify(pizzas_data)
+    
+    @app.route('/restaurants/<int:restaurant_id/pizzas>', methods=['POST'])
+    def add_pizza(restaurant_id):
+        data = request.get_json()
+        name = data.get('name')
+        ingredients = data.get('ingredients')
+        new_pizza = Restaurant(name=name, ingredients=ingredients)
+        db.session.add(new_pizza)
+        db.session.commit()
+        return jsonify({'message': 'Pizza added successfully.'})
+    
+    @app.route('/restaurants/<int:pizza_id>', methods=['PUT'])
+    def update_pizza(pizza_id):
+        data = request.get_json()
+        new_name = data.get('name')
+        new_ingredients = data.get('ingredients')
+
+        pizza = Pizza.query.get(pizza_id)
+        if pizza:
+            pizza.name = new_name
+            pizza.ingredients = new_ingredients
+            db.session.commit()
+            return jsonify({'message': 'Pizza updated successfully'})
+        else:
+            return jsonify({'message': 'Pizza not found.'})
+        
+    @app.route('/pizzas/<int:pizza_id>', methods=['DELETE'])
+    def delete_pizza(pizza_id):
+        pizza = Pizza.query.get(pizza_id)
+        if pizza:
+            db.session.delete(pizza)
+            db.session.commit()
+            return jsonify({'message': 'Pizza deleted successfully.'})
+        else:
+            return jsonify({'message': 'Pizza not found.'})
+        
+    
+    return app
 
     
