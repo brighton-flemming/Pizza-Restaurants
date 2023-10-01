@@ -28,8 +28,8 @@ def seed_database():
           print("🍕 Seeding restaurants")
      SeedingRestaurants()
 
-     restaurant1 = Restaurant(name= "Pizza Hut", address = "143 Elm Street", is_open ="True")
-     restaurant2 = Restaurant(name="Cheesy Delights", address ="209 Dyke Ave", is_open = "True")
+     restaurant1 = Restaurant(name= "Pizza Hut", address = "143 Elm Street", is_open = True)
+     restaurant2 = Restaurant(name="Cheesy Delights", address ="209 Dyke Ave", is_open = True)
 
      db.session.add(restaurant1, restaurant2)
      db.session.commit()
