@@ -11,7 +11,7 @@ class Restaurant(db.Model):
     address = db.Column(db.String(300), nullable=False)
     is_open = db.Column(db.Boolean)
 
-    restaurant_pizzas = db.relationship('RestaurantPizza', backref='restaurant', lazy=True)
+    restaurant_pizzas = db.relationship('RestaurantPizza', backref='restaurant_entries', lazy=True)
     pizzas = db.relationship('RestaurantPizza', back_populates='restaurant')
 
     def __repr__(self):
@@ -23,13 +23,13 @@ class RestaurantPizza(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    restaurant_name = db.Column(db.String, db.ForeignKey('restaurants.name'), nullable=False)
+    restaurant_name = db.Column(db.String, nullable=False)
     pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
-    pizza_name = db.Column(db.Integer, db.ForeignKey('pizzas.name'), nullable=False)
+    pizza_name = db.Column(db.String,  nullable=False)
     price = db.Column(db.Integer, nullable=False)
 
-    restaurant = db.relationship('Restaurant', backref='restaurant_pizzas', lazy=True)
-    pizza = db.relationship('Pizza', backref='pizza_restaurants', lazy=True)
+    restaurant = db.relationship('Restaurant', backref='restaurant_pizza_entries', foreign_keys=[restaurant_id], lazy=True)
+    pizza = db.relationship('Pizza', backref='pizza_restaurant_entries', foreign_keys=[pizza_id], lazy=True)
 
     @validates('price')
     def validate_price(self, key, value):
@@ -44,7 +44,7 @@ class Pizza(db.Model):
     name = db.Column(db.String(300), nullable=False)
     ingredients = db.Column(db.String(300), nullable=False)
 
-    pizza_restaurants = db.relationship('RestaurantPizza', backref='pizza', lazy=True)
+    pizza_restaurants = db.relationship('RestaurantPizza', backref='pizza_entries', lazy=True)
     restaurants = db.relationship('RestaurantPizza', back_populates='pizza')
 
     def __repr__(self):
