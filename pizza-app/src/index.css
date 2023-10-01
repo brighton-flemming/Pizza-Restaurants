@@ -86,3 +86,17 @@ body {
 .search-bar button:hover {
   background-color: #ffa400;
 }
+
+img {
+height: 90px;
+width: 90px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+h1{
+  margin-left: 10px;
+}
+
