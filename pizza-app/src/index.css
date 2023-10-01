@@ -1,5 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff;
+  color: #1e1c2a;
+}
+
+.searchbar {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.new-form-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.new-form {
+  margin-right: 20px;
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.card h4 {
+  color: #ffb411;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-group button {
+  background-color: #ffb411;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+  background-color: #ffa400;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.search-bar button {
+  background-color: #ffb411;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #ffa400;
 }

@@ -40,7 +40,10 @@ function RestaurantPage() {
       .then((r) => r.json())
       .then((pizzasArray) => {
         setPizzas(pizzasArray);
-      });
+      })
+      .catch((error) => {
+      console.error("Error fetching pizzas.", error) 
+    })
     }
   }, [restaurants]);
 
@@ -56,7 +59,7 @@ function RestaurantPage() {
 
   const handleDeleteRestaurant = (id) => {
     const updatedRestaurantsArray = restaurants.filter(
-      (restaurant) => restaurant.id === id
+      (restaurant) => restaurant.id !== id
     );
     setRestaurants(updatedRestaurantsArray);
   };
@@ -66,6 +69,7 @@ function RestaurantPage() {
       console.error("Invalid updated restaurant or missing id");
       return;
     }
+    
 
     const updatedRestaurantsArray = restaurants.map((restaurant) => {
       const updatedRestaurant = {
@@ -106,14 +110,20 @@ const displayedRestaurants = restaurants.filter((restaurant) => {
   });
 
   return (
-  <main>
+  <main className="container">
+    <div className="form-container">
     <NewPizzaForm onAddPizza={handleAddPizza} />
-    <NewRestaurantForm onAddRestaurant={handleAddRestaurant} />
+    </div>
+    <div className="form-container">
+      <NewRestaurantForm onAddRestaurant={handleAddRestaurant} />
+      </div>
+    <div className="search-container">
     <Search
       searchTerm={searchTerm}
       onPizzaSearchChange={setSearchTerm}
       onRestaurantSearchChange={setSearchTerm}
     />
+    </div>
     <RestaurantList
       restaurants={displayedRestaurants}
       handleUpdateRestaurant={handleUpdateRestaurant}
