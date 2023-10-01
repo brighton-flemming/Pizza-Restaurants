@@ -120,7 +120,13 @@ def create_app():
             return jsonify({'message': 'The Pizza you seek in the stated Restaurant is not found.'}), 404
 
     @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['POST'])
-    def add_restaurant_pizza(restaurant_id, restaurant_name, pizza_id, pizza_name, price):
+    def add_restaurant_pizza(restaurant_id):
+        data = request.get_json()
+        pizza_name =  data.get('pizza_name')
+        pizza_id = data.get('pizza_id')
+        restaurant_name = data.get('restaurant_name')
+        price = data.get('price')
+
         new_restaurant_pizza = RestaurantPizza(restaurant_id=restaurant_id, restaurant_name=restaurant_name, pizza_id=pizza_id, pizza_name=pizza_name, price=price)
         db.session.add(new_restaurant_pizza)
         db.session.commit()
