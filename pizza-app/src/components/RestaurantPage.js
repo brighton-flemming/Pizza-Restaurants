@@ -18,6 +18,13 @@ function RestaurantPage() {
   ]);
   const [pizzaSearchTerm, setPizzaSearchTerm] = useState("");
   const [restaurantSearchTerm, setRestaurantSearchTerm] = useState("")
+  const [pizzas, setPizzas] = useState([
+    {
+        id: null,
+        name:"",
+        ingredients:"",
+    },
+  ]);
   
 
   useEffect(() => {
@@ -26,15 +33,8 @@ function RestaurantPage() {
       .then((restaurantsArray) => {
         setRestaurants(restaurantsArray);
       });
-  }, []);
+  }, [restaurants]);
 
-  const [pizzas, setPizzas] = useState([
-    {
-        id: null,
-        name:"",
-        ingredients:"",
-    },
-  ]);
 
   useEffect(() => {
     if (restaurants.length > 0) {
@@ -48,7 +48,7 @@ function RestaurantPage() {
       console.error("Error fetching pizzas.", error) 
     })
     }
-  }, [restaurants]);
+  }, [restaurants, pizzas]);
 
   const handleAddRestaurant = (newRestaurant) => {
     const updatedRestaurantsArray = [...restaurants, newRestaurant];

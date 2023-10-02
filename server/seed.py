@@ -1,5 +1,3 @@
-from random import randint, choice
-
 from app import db, app
 from models import Restaurant, RestaurantPizza, Pizza
 
