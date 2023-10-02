@@ -9,7 +9,7 @@ import SearchRestaurant from "./SearchRestaurant";
 function RestaurantPage() {
   const [restaurants, setRestaurants] = useState([
     {
-      id: 0,
+      id: 1,
       name: "",
       address: "",
       pizzas: "",
@@ -20,9 +20,9 @@ function RestaurantPage() {
   const [restaurantSearchTerm, setRestaurantSearchTerm] = useState("")
   const [pizzas, setPizzas] = useState([
     {
-        id:0,
+        id:1,
         name:"",
-        ingredients:"",
+        ingredients:"", 
     },
   ]);
   
@@ -37,9 +37,9 @@ function RestaurantPage() {
 
 
   useEffect(() => {
-    if (restaurants.length > 0) {
-        const restaurantId = restaurants[0].id;
-    fetch(`/restaurants/${restaurantId}/pizzas`)
+    if (restaurants && restaurants.length >= 1 && restaurants[1]) {
+        const restaurant_id = restaurants[1].id;
+    fetch(`/restaurants/${restaurant_id}/pizzas`)
       .then((r) => r.json())
       .then((pizzasArray) => {
         setPizzas(pizzasArray);

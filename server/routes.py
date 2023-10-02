@@ -17,7 +17,7 @@ def create_app():
         appname = current_app.name
         response_body = f'''
            <h1>The hungriest customer of the day is {hoster}</h1>
-           <h2>The fortunate appliaction that gest to satosfy your hunger {appname}</h2>
+           <h2>The fortunate appliaction that gets to satisfy your hunger {appname}</h2>
            <h3>How we got here you ask? Here's the answer {g.path}</h3>
         '''
 
@@ -70,9 +70,9 @@ def create_app():
         else:
             return jsonify({'message': 'Restaurant not found.'})
     
-    @app.route('/pizzas', methods=['GET'])
-    def get_restaurant_pizzas(restaurant_id):
-        pizzas = Pizza.query.filter_by(restaurant_id=restaurant_id).all()
+    @app.route('/restaurants/<int:restaurant_id>/pizzas', methods=['GET'])
+    def get_restaurant_pizzas(pizza_id):
+        pizzas = Pizza.query.filter_by(pizza_id=pizza_id).all()
         pizzas_data = [{'id': pizza.id, 'name': pizza.name, 'ingredients': pizza.ingredients} for pizza in pizzas]
         return jsonify(pizzas_data)
     
@@ -112,8 +112,8 @@ def create_app():
             return jsonify({'message': 'Pizza not found.'})
     
     @app.route('/restaurants/<int:restaurant_id>/pizzas/<int:pizza_id>', methods=['GET'])
-    def get_restaurant_pizza(restaurant_id, pizza_id):
-        restaurant_pizza = RestaurantPizza.query.filter_by(restaurant_id=restaurant_id, pizza_id=pizza_id).first()
+    def get_restaurant_pizza( pizza_id):
+        restaurant_pizza = RestaurantPizza.query.filter_by( pizza_id=pizza_id).first()
         if restaurant_pizza:
             return jsonify({'id': restaurant_pizza.id, 'restaurant_id': restaurant_pizza.restaurant_id, 'resturant_name': restaurant_pizza.restaurant_name,'pizza_id': restaurant_pizza.pizza_id, 'pizza_name': restaurant_pizza.pizza_name})
         else:
