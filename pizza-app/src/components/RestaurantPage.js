@@ -9,7 +9,7 @@ import SearchRestaurant from "./SearchRestaurant";
 function RestaurantPage() {
   const [restaurants, setRestaurants] = useState([
     {
-      id: null,
+      id: 0,
       name: "",
       address: "",
       pizzas: "",
@@ -20,7 +20,7 @@ function RestaurantPage() {
   const [restaurantSearchTerm, setRestaurantSearchTerm] = useState("")
   const [pizzas, setPizzas] = useState([
     {
-        id: null,
+        id:0,
         name:"",
         ingredients:"",
     },
