@@ -33,7 +33,7 @@ class RestaurantPizza(db.Model):
 
     @validates('price')
     def validate_price(self, key, value):
-        if not value >= 1 or value <= 30:
+        if not (1 <= value <= 30):
             raise ValueError("Price of a pizza must be between 1 and 30 euros.")
         return value
 
